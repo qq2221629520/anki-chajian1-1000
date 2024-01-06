@@ -3,7 +3,7 @@ from aqt.qt import QAction
 from aqt.utils import showInfo, qconnect
 from aqt.gui_hooks import main_window_did_init
 from datetime import datetime, timedelta
-import time
+
 
 def testFunction() -> None:
     # 获取到所有正在学习的卡片的id
@@ -13,7 +13,7 @@ def testFunction() -> None:
     review_cards = [card[0] for card in mw.col.db.all("select id from cards where queue = 2")]
 
     # 定义推迟的天数
-    days_to_add = 1
+    days_to_add = -1
 
     for id in learning_cards:
         # 获取正在学习的卡片对象
@@ -59,7 +59,7 @@ def testFunction() -> None:
 
 
 # 创建一个新的菜单项 "test"
-action = QAction("按一下推迟一天", mw)
+action = QAction("按一下提前一天", mw)
 
 # 设置点击时调用 testFunction
 qconnect(action.triggered, testFunction)
