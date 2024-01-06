@@ -25,7 +25,8 @@ def testFunction() -> None:
             continue
 
         # 获取当前到期时间，从1970年1月1日开始计算的，这个数很大，要注意
-        current_due_days = card.due    
+        current_due_days = card.due   
+        showInfo(str(current_due_days)) 
 
         # 使用 Anki 提供的 set_due_date 方法更改到期时间
         mw.col.sched.set_due_date([id], str(days_to_add))
@@ -44,9 +45,12 @@ def testFunction() -> None:
 
         # 获取当前到期时间，这个数是从当日算起的，比如后天天到期，那么这个数就是2
         current_due_days = card.due
+
   
         # 计算新的到期时间（推迟指定天数）
-        new_due_days = current_due_days + days_to_add
+        new_due_days = current_due_days + days_to_add-12
+
+        
  
         # 使用 Anki 提供的 set_due_date 方法更改到期时间
         mw.col.sched.set_due_date([id], str(new_due_days))
