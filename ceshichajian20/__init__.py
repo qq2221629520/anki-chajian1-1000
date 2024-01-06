@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 def testFunction() -> None:
     # 获取到所有正在学习的卡片的id
-    learning_cards = [card[0] for card in mw.col.db.all("select id from cards where queue = 1")]
+    #learning_cards = [card[0] for card in mw.col.db.all("select id from cards where queue = 1")]
 
     # 获取到所有正在复习的卡片的id
     review_cards = [card[0] for card in mw.col.db.all("select id from cards where queue = 2")]
@@ -32,6 +32,8 @@ def testFunction() -> None:
     # 展示一个已完成的提示信息以及总共有多少张正在学习的卡片
     showInfo("已经将正在学习的卡片推迟了到了明天！！！" + f"总共有 {len(learning_cards)} 张正在学习的卡片被推迟。") """
 
+    i = 0 #记录提前到当日的卡片数
+
     for id in review_cards:
 
         # 获取复习中的卡片对象
@@ -44,21 +46,22 @@ def testFunction() -> None:
         # 获取当前到期时间，这个数是从当日算起的，比如后天天到期，那么这个数就是2
         current_due_days = card.due
 
-        showInfo(str(current_due_days))
 
-
+        if current_due_days >= 13:
             
-  
-        # 计算新的到期时间（推迟指定天数）
-        new_due_days = current_due_days - days_to_add
-
-        showInfo(str(new_due_days))
+         
+        # 计算新的到期时间（推迟指定天数）,最近有bug，所以先减去12天
+            new_due_days = current_due_days - days_to_add-12
  
         # 使用 Anki 提供的 set_due_date 方法更改到期时间
-        mw.col.sched.set_due_date([id], str(new_due_days))
+            mw.col.sched.set_due_date([id], str(new_due_days))
+        else:
+            #记录提前了几张卡片
+            i += 1
+    showInfo(f"已经将{i} 张正在复习的卡片提前到了今天！！！" + "不能在提前了。")
 
     # 展示一个已完成的提示信息以及总共有多少张正在复习的卡片
-    showInfo("已经将正在复习的卡片提前了一天！！！" + f"总共有 {len(review_cards)} 张正在复习的卡片被提前。")
+    showInfo("已经将正在复习的卡片提前了一天！！！" + f"总共有 {len(review_cards)-i} 张正在复习的卡片被提前。")
     
 
 
