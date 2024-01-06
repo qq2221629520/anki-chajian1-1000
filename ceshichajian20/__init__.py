@@ -4,7 +4,6 @@ from aqt.utils import showInfo, qconnect
 from aqt.gui_hooks import main_window_did_init
 from datetime import datetime, timedelta
 import time
-import random
 
 def testFunction() -> None:
     # 获取到所有正在学习的卡片的id
