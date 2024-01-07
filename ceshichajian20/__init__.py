@@ -1,3 +1,4 @@
+# 实现了将卡片提前一天的功能
 from aqt import mw
 from aqt.qt import QAction
 from aqt.utils import showInfo, qconnect
